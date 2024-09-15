@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tomcat-config
+  namespace: webapps
+data:
+  tomcat-users.xml: |
+    <tomcat-users>
+        <role rolename="manager-gui"/>
+        <role rolename="admin-gui"/>
+        <user username="admin" password="admin" roles="manager-gui,admin-gui"/>
+    </tomcat-users>

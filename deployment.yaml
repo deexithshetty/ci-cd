@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 1 # Number of pods to run
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: dockerdeexith/myapp-dev:latest  # Use your image name here
+        ports:
+        - containerPort: 8080  # Change this if your app listens on a different port
+        volumeMounts:
+        - name: tomcat-config-volume
+          mountPath: /usr/local/tomcat/conf/tomcat-users.xml
+          subPath: tomcat-users.xml
+      volumes:
+      - name: tomcat-config-volume
+        configMap:
+          name: tomcat-config  # Name of your ConfigMap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 80       # Service port
+      targetPort: 8080  # The port on the container
+  type: NodePort  # Expose externally (use NodePort if not using cloud LB)
