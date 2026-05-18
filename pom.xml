@@ -30,7 +30,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- SonarQube -->
-        <sonar.host.url>http://172.31.33.167:9000</sonar.host.url>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
 
     </properties>
 
